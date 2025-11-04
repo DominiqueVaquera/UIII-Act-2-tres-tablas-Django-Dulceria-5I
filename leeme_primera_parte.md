@@ -395,7 +395,7 @@ Paso 1: Cambio en los Modelos
 Adaptaremos los modelos a la idea de una dulcería, donde los productos serían dulces y podrían tener atributos como tipo, sabor, y foto.
 
 app_dulceria/models.py
-
+```plaintext
 from django.db import models
 
 class Dulce(models.Model):
@@ -409,13 +409,14 @@ class Dulce(models.Model):
     class Meta:
         verbose_name = "Dulce"
         verbose_name_plural = "Dulces"
-
+```
 Paso 2: Cambiar Vistas
 
 Las vistas reflejarán lo que se muestra en una dulcería: la lista de dulces, los detalles de un dulce específico, la creación, edición y eliminación de dulces.
-
+```plaintext
 app_dulceria/views.py
-
+```
+```plaintext
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Dulce
 from .forms import DulceForm
@@ -455,11 +456,11 @@ def borrar_dulce(request, dulce_id):
         dulce.delete()
         return redirect('app_dulceria:listar_dulces')
     return render(request, 'confirmar_borrar.html', {'dulce': dulce})
-
+```
 Paso 3: Formularios
 
 El formulario será para crear y editar dulces.
-
+```plaintext
 app_dulceria/forms.py
 
 from django import forms
@@ -469,11 +470,11 @@ class DulceForm(forms.ModelForm):
     class Meta:
         model = Dulce
         fields = ['nombre', 'sabor', 'foto_dulce']
-
+```
 Paso 4: Actualizar Plantillas HTML
 
 Las plantillas de la aplicación cambiarán los textos y las imágenes de "artistas" a "dulces".
-
+```plaintext
 app_dulceria/templates/base.html (cambiar los nombres y clases de los enlaces)
 
 {% load static %}
@@ -506,7 +507,8 @@ app_dulceria/templates/base.html (cambiar los nombres y clases de los enlaces)
 </body>
 </html>
 
-
+```
+```plaintext
 app_dulceria/templates/listar_dulces.html
 
 {% extends 'base.html' %}
@@ -536,8 +538,8 @@ app_dulceria/templates/listar_dulces.html
     {% endfor %}
 </ul>
 {% endblock %}
-
-
+```
+```plaintext
 app_dulceria/templates/detalle_dulce.html
 
 {% extends 'base.html' %}
@@ -564,7 +566,8 @@ app_dulceria/templates/detalle_dulce.html
 </article>
 {% endblock %}
 
-
+```
+```plaintext
 app_dulceria/templates/formulario_dulce.html
 
 {% extends 'base.html' %}
@@ -578,8 +581,8 @@ app_dulceria/templates/formulario_dulce.html
     <div class="actions">
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a href="{% url 'app_dulceria:listar_dulces'
+```
 
-ChatGPT Plus
 
 ¡Claro! A continuación te dejo una versión más detallada de cada uno de los pasos que necesitas seguir para completar tu proyecto Dulcería en Django, organizados de manera clara y estructurada. Esto incluye todos los procedimientos necesarios, detalles sobre cada archivo, y la lógica que debes implementar.
 
@@ -589,10 +592,10 @@ Procedimiento:
 Crea una nueva carpeta en tu máquina donde se almacenará todo el proyecto. Puedes hacerlo manualmente o mediante la terminal (línea de comandos).
 
 Comando en terminal (Linux/Mac/Windows):
-
+```plaintext
 mkdir UIII_Dulceria_0726
 cd UIII_Dulceria_0726
-
+```
 
 Este paso crea una carpeta llamada UIII_Dulceria_0726 y entra dentro de ella.
 
@@ -706,7 +709,7 @@ Procedimiento:
 Dirígete a la carpeta backend_Dulceria y dentro de ella abre el archivo models.py que está en el directorio app_Dulceria.
 
 Define el modelo Dulce para almacenar la información de los dulces disponibles en la tienda:
-
+```plaintext
 from django.db import models
 
 class Dulce(models.Model):
@@ -719,7 +722,7 @@ class Dulce(models.Model):
 
     def __str__(self):
         return self.nombre
-
+```
 
 Este modelo tiene atributos para el nombre, descripción, precio, stock, categoría y fecha de disponibilidad del dulce.
 
@@ -746,7 +749,7 @@ Procedimiento:
 Crea las vistas necesarias para gestionar los dulces en el sistema, tales como ver, agregar, editar y borrar dulces.
 
 Función de ejemplo en views.py:
-
+```plaintext
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Dulce
 from django.http import HttpResponse
@@ -764,7 +767,7 @@ def agregar_dulce(request):
         dulce = Dulce.objects.create(nombre=nombre, precio=precio)
         return redirect('inicio_dulceria')  # Redirige a la vista de inicio
     return render(request, 'agregar_dulce.html')
-
+```
 14. Crear la carpeta templates dentro de app_Dulceria:
 Procedimiento:
 
@@ -781,7 +784,7 @@ Dentro de esta carpeta, crea archivos HTML como base.html, header.html, footer.h
 Procedimiento:
 
 En el archivo base.html, agrega el enlace a Bootstrap para utilizar su diseño responsivo y fácil de usar.
-
+```plaintext
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -800,12 +803,12 @@ En el archivo base.html, agrega el enlace a Bootstrap para utilizar su diseño r
     {% include 'footer.html' %}
 </body>
 </html>
-
+```
 16. Crear otros archivos HTML como navbar.html, footer.html, etc.:
 Procedimiento:
 
 navbar.html: Aquí incluirás la barra de navegación con las opciones del sistema y los submenús:
-
+```plaintext
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Sistema de Administración Dulcería</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -828,12 +831,12 @@ navbar.html: Aquí incluirás la barra de navegación con las opciones del siste
     </ul>
   </div>
 </nav>
-
+```
 17. Procedimiento para crear las URLs en urls.py:
 Procedimiento:
 
 Crea el archivo urls.py dentro de app_Dulceria para definir las rutas de las vistas CRUD. Por ejemplo:
-
+```plaintext
 from django.urls import path
 from . import views
 
@@ -841,7 +844,7 @@ urlpatterns = [
     path('', views.inicio_dulceria, name='inicio_dulceria'),
     path('agregar/', views.agregar_dulce, name='agregar_dulce'),
 ]
-
+```
 Conclusión:
 
 Estos pasos cubren desde la creación de tu entorno de desarrollo hasta la implementación de los modelos y vistas CRUD básicos. ¡Espero que con estos detalles puedas avanzar fácilmente con tu proyecto! Si tienes alguna pregunta sobre algún paso, no dudes en preguntar.
@@ -857,16 +860,16 @@ Lo primero que necesitas hacer es crear una carpeta donde se almacenará todo tu
 Comando en terminal:
 
 Linux/Mac:
-
+```plaintext
 mkdir UIII_Dulceria_0726
 cd UIII_Dulceria_0726
-
+```
 
 Windows (CMD o PowerShell):
-
+```plaintext
 mkdir UIII_Dulceria_0726
 cd UIII_Dulceria_0726
-
+```
 
 Esto crea una carpeta llamada UIII_Dulceria_0726 y navega hacia ella.
 
@@ -1028,7 +1031,7 @@ Explicación y Procedimiento:
 
 Estructura del Modelo Dulce:
 En la carpeta backend_Dulceria/app_Dulceria, abre el archivo models.py y define un modelo para los dulces.
-
+```plaintext
 from django.db import models
 
 class Dulce(models.Model):
@@ -1041,7 +1044,7 @@ class Dulce(models.Model):
 
     def __str__(self):
         return self.nombre
-
+```
 
 ¿Por qué definir un modelo?
 Este modelo representa la información básica de un dulce en la tienda. Los campos incluyen el nombre, precio, stock, categoría, y fecha de disponibilidad.
