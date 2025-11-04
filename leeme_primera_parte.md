@@ -845,3 +845,229 @@ urlpatterns = [
 Conclusión:
 
 Estos pasos cubren desde la creación de tu entorno de desarrollo hasta la implementación de los modelos y vistas CRUD básicos. ¡Espero que con estos detalles puedas avanzar fácilmente con tu proyecto! Si tienes alguna pregunta sobre algún paso, no dudes en preguntar.
+
+Entendido! Voy a desglosar la información con el nivel de detalle más completo posible, cubriendo todos los aspectos desde la instalación hasta la configuración completa del proyecto Django, para que puedas implementarlo paso a paso sin dejar nada al azar. Voy a incluir información extra, explicaciones, posibles errores comunes y cómo solucionarlos, ejemplos de código más detallados, y más. Esto debería ayudarte a comprender completamente cómo crear y desarrollar tu proyecto de Dulcería en Django.
+
+1. Crear la Carpeta del Proyecto (UIII_Dulceria_0726)
+Explicación y Procedimiento:
+
+Crear la carpeta del proyecto:
+Lo primero que necesitas hacer es crear una carpeta donde se almacenará todo tu proyecto. Esto se hace con el comando mkdir en la terminal.
+
+Comando en terminal:
+
+Linux/Mac:
+
+mkdir UIII_Dulceria_0726
+cd UIII_Dulceria_0726
+
+
+Windows (CMD o PowerShell):
+
+mkdir UIII_Dulceria_0726
+cd UIII_Dulceria_0726
+
+
+Esto crea una carpeta llamada UIII_Dulceria_0726 y navega hacia ella.
+
+¿Por qué se hace esto?
+Crear una carpeta base es importante porque en ella se almacenarán tanto el entorno virtual, las aplicaciones Django, como los archivos de configuración y plantillas.
+
+2. Abrir VS Code en la Carpeta Creada
+Explicación y Procedimiento:
+
+Abrir VS Code desde la terminal:
+Para trabajar en VS Code directamente desde la carpeta que creaste, puedes hacerlo desde la terminal de la siguiente manera.
+
+Comando en terminal:
+
+code .
+
+
+Esto abrirá VS Code en la carpeta actual.
+
+¿Por qué VS Code?
+Visual Studio Code es un editor de código ligero y extensible, ideal para proyectos Django. Tiene soporte integrado para Python y Django, lo que facilita la edición y depuración del código.
+
+3. Abrir Terminal en VS Code
+Explicación y Procedimiento:
+
+Abrir terminal integrada en VS Code:
+Si no ves la terminal en VS Code, abre la terminal integrada presionando Ctrl + ~ en Windows o Linux, o Cmd + ~ en Mac.
+
+Pasos:
+
+Abre VS Code.
+
+Haz clic en el menú Ver y selecciona Terminal.
+
+¿Por qué se usa la terminal integrada?
+La terminal integrada permite ejecutar comandos sin salir de VS Code, lo que hace que sea más eficiente trabajar con los comandos del proyecto.
+
+4. Crear el Entorno Virtual .venv
+Explicación y Procedimiento:
+
+¿Por qué un entorno virtual?
+El entorno virtual es una forma de aislar las dependencias de tu proyecto de otras instalaciones de Python en tu sistema. Así, evitas conflictos entre versiones de librerías.
+
+Crear el entorno virtual:
+Desde la terminal de VS Code, ejecuta el siguiente comando para crear el entorno virtual:
+
+Comando:
+
+python -m venv .venv
+
+
+Esto crea una carpeta oculta llamada .venv que contendrá el entorno virtual de Python.
+
+¿Por qué usar .venv?
+El nombre .venv es una convención para nombrar la carpeta del entorno virtual. La “.venv” indica que es un directorio oculto en sistemas Unix, pero es totalmente accesible.
+
+5. Activar el Entorno Virtual
+Explicación y Procedimiento:
+
+Activar el entorno virtual:
+Para activar el entorno virtual, necesitas ejecutar el comando correspondiente según tu sistema operativo:
+
+Windows (CMD/PowerShell):
+
+.venv\Scripts\activate
+
+
+Linux/Mac:
+
+source .venv/bin/activate
+
+
+¿Por qué activar el entorno virtual?
+Una vez activado el entorno virtual, cualquier librería que instales con pip se instalará únicamente dentro de ese entorno, asegurando que tu proyecto no tenga dependencias globales.
+
+Verificación:
+Cuando el entorno virtual esté activado, deberías ver el nombre de tu entorno virtual en la terminal como prefijo (ejemplo: (.venv)).
+
+6. Seleccionar el Intérprete de Python en VS Code
+Explicación y Procedimiento:
+
+Seleccionar el intérprete de Python adecuado:
+Para asegurarte de que VS Code utiliza el entorno virtual, abre la paleta de comandos con Ctrl + Shift + P o Cmd + Shift + P y busca “Python: Select Interpreter”.
+
+Seleccionar el intérprete en .venv:
+Elige el intérprete dentro de la carpeta .venv para asegurarte de que VS Code usará el entorno virtual para el proyecto.
+
+7. Instalar Django
+Explicación y Procedimiento:
+
+Instalar Django dentro del entorno virtual:
+Con el entorno virtual activado, instala Django con el siguiente comando:
+
+Comando:
+
+pip install django
+
+
+Verificación:
+Puedes verificar que Django está instalado correctamente ejecutando:
+
+python -m django --version
+
+
+Esto debe devolver la versión de Django instalada, por ejemplo, 4.0.1.
+
+8. Crear el Proyecto Django backend_Dulceria
+Explicación y Procedimiento:
+
+Crear el proyecto Django:
+Usando el comando django-admin startproject, crea el proyecto principal de tu backend.
+
+Comando:
+
+django-admin startproject backend_Dulceria
+
+
+Estructura del Proyecto:
+El comando anterior crea una estructura básica del proyecto con los siguientes archivos y carpetas:
+
+backend_Dulceria/ (carpeta principal)
+
+backend_Dulceria/ (subcarpeta de configuración)
+
+settings.py (configuración principal)
+
+urls.py (enrutamiento de URLs)
+
+wsgi.py (configuración de despliegue)
+
+asgi.py (configuración de comunicación asíncrona)
+
+manage.py (herramienta de administración de Django)
+
+9. Ejecutar el Servidor en el Puerto 0726
+Explicación y Procedimiento:
+
+Ejecutar el servidor de desarrollo:
+Para ver tu proyecto en funcionamiento, ejecuta el servidor de desarrollo de Django con el siguiente comando:
+
+Comando:
+
+python manage.py runserver 0726
+
+
+Acceder al servidor:
+Ahora, abre tu navegador y visita la URL: http://127.0.0.1:0726.
+
+Resultado esperado: Verás la página de bienvenida de Django, que confirma que el servidor está funcionando correctamente.
+
+10. Copiar y Pegar el Link en el Navegador
+Explicación y Procedimiento:
+
+Acceso al servidor:
+Copia el enlace http://127.0.0.1:0726 y pégalo en tu navegador para ver la interfaz predeterminada de Django.
+
+11. Crear el Modelo Dulce en models.py
+Explicación y Procedimiento:
+
+Estructura del Modelo Dulce:
+En la carpeta backend_Dulceria/app_Dulceria, abre el archivo models.py y define un modelo para los dulces.
+
+from django.db import models
+
+class Dulce(models.Model):
+    nombre = models.CharField(max_length=150, help_text="Nombre del dulce")
+    descripcion = models.TextField(blank=True, null=True, help_text="Descripción detallada del dulce")
+    precio = models.DecimalField(max_digits=10, decimal_places=2, help_text="Precio del dulce")
+    stock = models.PositiveIntegerField(help_text="Cantidad de unidades en stock")
+    categoria = models.CharField(max_length=50, help_text="Categoría del dulce")
+    fecha_disponibilidad = models.DateField(help_text="Fecha de disponibilidad")
+
+    def __str__(self):
+        return self.nombre
+
+
+¿Por qué definir un modelo?
+Este modelo representa la información básica de un dulce en la tienda. Los campos incluyen el nombre, precio, stock, categoría, y fecha de disponibilidad.
+
+12. Realizar Migraciones (makemigrations y migrate)
+Explicación y Procedimiento:
+
+Crear las migraciones para el modelo:
+Django necesita generar los scripts para crear la tabla correspondiente en la base de datos.
+
+Comando:
+
+python manage.py makemigrations
+
+
+Aplicar las migraciones:
+Después de generar las migraciones, aplica los cambios a la base de datos:
+
+Comando:
+
+python manage.py migrate
+
+
+¿Por qué migraciones?
+Las migraciones permiten que Django cree y actualice la base de datos según la definición de los modelos.
+
+Conclusión Final:
+
+Aquí hemos cubierto los primeros pasos básicos y más detallados para crear tu proyecto Django, crear un entorno virtual, instalar Django, y crear el modelo Dulce. Cada paso está completamente explicado y detallado con los comandos, razones, y explicaciones sobre por qué hacemos cada cosa. Si necesitas más detalles o profundizar más en alguna parte, avísame y te proporcionaré más información.
