@@ -35,7 +35,7 @@ Curso_Django/
     ├── manage.py
     └── requirements.txt
 
-
+```
 
 Paso 1: Cambio en los Modelos
     
@@ -184,3 +184,192 @@ python manage.py migrate
 Continuación de los Procedimientos
 En los siguientes pasos, te guiaré sobre cómo implementar las vistas y configuraciones adicionales como las plantillas HTML, URLs, la creación de formularios y otras configuraciones necesarias para tu aplicación.
 Si deseas continuar con estos procedimientos, me avisas y los vamos detallando uno por uno.
+
+Paso 1: Cambio en los Modelos
+
+Adaptaremos los modelos a la idea de una dulcería, donde los productos serían dulces y podrían tener atributos como tipo, sabor, y foto.
+
+app_dulceria/models.py
+
+from django.db import models
+
+class Dulce(models.Model):
+    nombre = models.CharField(max_length=100, help_text="Nombre del dulce")
+    sabor = models.CharField(max_length=100, help_text="Sabor del dulce")
+    foto_dulce = models.ImageField(upload_to='img_dulces/', blank=True, null=True)
+
+    def __str__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name = "Dulce"
+        verbose_name_plural = "Dulces"
+
+Paso 2: Cambiar Vistas
+
+Las vistas reflejarán lo que se muestra en una dulcería: la lista de dulces, los detalles de un dulce específico, la creación, edición y eliminación de dulces.
+
+app_dulceria/views.py
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Dulce
+from .forms import DulceForm
+
+def listar_dulces(request):
+    dulces = Dulce.objects.all()
+    return render(request, 'listar_dulces.html', {'dulces': dulces})
+
+def detalle_dulce(request, dulce_id):
+    dulce = get_object_or_404(Dulce, id=dulce_id)
+    return render(request, 'detalle_dulce.html', {'dulce': dulce})
+
+def crear_dulce(request):
+    if request.method == 'POST':
+        form = DulceForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('app_dulceria:listar_dulces')
+    else:
+        form = DulceForm()
+    return render(request, 'formulario_dulce.html', {'form': form, 'titulo': 'Crear Dulce'})
+
+def editar_dulce(request, dulce_id):
+    dulce = get_object_or_404(Dulce, id=dulce_id)
+    if request.method == 'POST':
+        form = DulceForm(request.POST, request.FILES, instance=dulce)
+        if form.is_valid():
+            form.save()
+            return redirect('app_dulceria:detalle_dulce', dulce_id=dulce.id)
+    else:
+        form = DulceForm(instance=dulce)
+    return render(request, 'formulario_dulce.html', {'form': form, 'titulo': 'Editar Dulce'})
+
+def borrar_dulce(request, dulce_id):
+    dulce = get_object_or_404(Dulce, id=dulce_id)
+    if request.method == 'POST':
+        dulce.delete()
+        return redirect('app_dulceria:listar_dulces')
+    return render(request, 'confirmar_borrar.html', {'dulce': dulce})
+
+Paso 3: Formularios
+
+El formulario será para crear y editar dulces.
+
+app_dulceria/forms.py
+
+from django import forms
+from .models import Dulce
+
+class DulceForm(forms.ModelForm):
+    class Meta:
+        model = Dulce
+        fields = ['nombre', 'sabor', 'foto_dulce']
+
+Paso 4: Actualizar Plantillas HTML
+
+Las plantillas de la aplicación cambiarán los textos y las imágenes de "artistas" a "dulces".
+
+app_dulceria/templates/base.html (cambiar los nombres y clases de los enlaces)
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Dulcería{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="main-header">
+            <h1><a href="{% url 'app_dulceria:listar_dulces' %}">🍬 Dulcería</a></h1>
+            <nav class="main-nav">
+                <a href="{% url 'app_dulceria:listar_dulces' %}">🍬 Dulces</a>
+                <a href="{% url 'app_dulceria:crear_dulce' %}">➕ Nuevo Dulce</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            {% block contenido %}{% endblock %}
+        </main>
+
+        <footer class="main-footer">
+            <p>© 2025 Dulcería - ¡La mejor selección de dulces!</p>
+        </footer>
+    </div>
+</body>
+</html>
+
+
+app_dulceria/templates/listar_dulces.html
+
+{% extends 'base.html' %}
+{% block titulo %}Dulces | Dulcería{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+    <h2>Dulces Disponibles</h2>
+    <a href="{% url 'app_dulceria:crear_dulce' %}" class="btn btn-primary">+ Agregar Dulce</a>
+</div>
+
+<ul class="dulce-grid">
+    {% for dulce in dulces %}
+    <li class="dulce-card">
+        <a href="{% url 'app_dulceria:detalle_dulce' dulce.id %}">
+            {% if dulce.foto_dulce %}
+                <img src="{{ dulce.foto_dulce.url }}" alt="Foto de {{ dulce.nombre }}" class="dulce-img">
+            {% else %}
+                <div class="dulce-placeholder">🍬</div>
+            {% endif %}
+            <h3>{{ dulce.nombre }}</h3>
+            <p class="dulce-sabor">{{ dulce.sabor }}</p>
+        </a>
+    </li>
+    {% empty %}
+    <li class="no-dulces">No hay dulces disponibles.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+app_dulceria/templates/detalle_dulce.html
+
+{% extends 'base.html' %}
+{% block titulo %}{{ dulce.nombre }} | Dulcería{% endblock %}
+
+{% block contenido %}
+<article class="dulce-detail">
+    <div class="dulce-banner">
+        {% if dulce.foto_dulce %}
+            <img src="{{ dulce.foto_dulce.url }}" alt="Foto de {{ dulce.nombre }}" class="detail-photo">
+        {% else %}
+            <div class="detail-placeholder">🍬</div>
+        {% endif %}
+        <div class="dulce-info">
+            <h1>{{ dulce.nombre }}</h1>
+            <h3>Sabor: {{ dulce.sabor }}</h3>
+        </div>
+    </div>
+
+    <div class="detail-actions">
+        <a href="{% url 'app_dulceria:editar_dulce' dulce.id %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'app_dulceria:borrar_dulce' dulce.id %}" class="btn btn-danger">🗑️ Eliminar</a>
+    </div>
+</article>
+{% endblock %}
+
+
+app_dulceria/templates/formulario_dulce.html
+
+{% extends 'base.html' %}
+{% block titulo %}{{ titulo }} | Dulcería{% endblock %}
+
+{% block contenido %}
+<h2>{{ titulo }}</h2>
+<form method="post" enctype="multipart/form-data" class="form-styled">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="actions">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'app_dulceria:listar_dulces'
