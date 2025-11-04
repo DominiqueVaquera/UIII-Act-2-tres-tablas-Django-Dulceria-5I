@@ -1,10 +1,9 @@
 Primera Parte: Proyecto Dulcería en Django
 A continuación, te proporciono los procedimientos detallados para crear y configurar el proyecto "Dulcería" en Django, paso por paso. Vamos a recorrer el proceso desde la creación de las carpetas hasta la implementación de las vistas y configuraciones necesarias para el funcionamiento del proyecto.
-#
+
 # ==========================================
 # 📁 Estructura Final del Proyecto
 # ==========================================
-# Estructura Final del Proyecto
 
 ```plaintext
 Curso_Django/
