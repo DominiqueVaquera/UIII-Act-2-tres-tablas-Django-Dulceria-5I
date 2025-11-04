@@ -25,7 +25,6 @@ Curso_Django/
     │   │   ├── base.html
     │   │   ├── listar_productos.html
     │   │   ├── detalle_producto.html
-    │   │   ├── formulario_producto.html
     │   │   └── confirmar_borrar.html
     │   └── static/
     │       └── css/
