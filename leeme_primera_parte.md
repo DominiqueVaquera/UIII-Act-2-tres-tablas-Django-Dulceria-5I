@@ -30,6 +30,7 @@ Curso_Django/
     ├── manage.py
     └── requirements.txt
 
+Paso 1: Cambio en los Modelos
     
 1. Procedimiento para crear la carpeta del Proyecto:
 Crea una carpeta donde será almacenado el proyecto. Puedes hacerlo manualmente o usando la terminal de VS Code.
