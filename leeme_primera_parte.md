@@ -1,11 +1,16 @@
 Primera Parte: Proyecto Dulcería en Django
 A continuación, te proporciono los procedimientos detallados para crear y configurar el proyecto "Dulcería" en Django, paso por paso. Vamos a recorrer el proceso desde la creación de las carpetas hasta la implementación de las vistas y configuraciones necesarias para el funcionamiento del proyecto.
+#
+# ==========================================
+# 📁 Estructura Final del Proyecto
+# ==========================================
+# Estructura Final del Proyecto
 
-Estructura del Proyecto:
+```plaintext
 Curso_Django/
 └── Dulceria/
     ├── .venv/                     # Entorno virtual
-    ├── backend_dulceria/          # Configuración del proyecto
+    ├── backend_dulceria/           # Configuración del proyecto
     │   ├── __init__.py
     │   ├── settings.py
     │   ├── urls.py
@@ -19,9 +24,9 @@ Curso_Django/
     │   ├── urls.py
     │   ├── templates/
     │   │   ├── base.html
-    │   │   ├── listar_dulces.html
-    │   │   ├── detalle_dulce.html
-    │   │   ├── formulario_dulce.html
+    │   │   ├── listar_productos.html
+    │   │   ├── detalle_producto.html
+    │   │   ├── formulario_producto.html
     │   │   └── confirmar_borrar.html
     │   └── static/
     │       └── css/
@@ -29,6 +34,8 @@ Curso_Django/
     ├── media/                     # Imágenes subidas (creado automáticamente)
     ├── manage.py
     └── requirements.txt
+
+
 
 Paso 1: Cambio en los Modelos
     
