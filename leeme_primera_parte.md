@@ -1,6 +1,35 @@
 Primera Parte: Proyecto Dulcería en Django
 A continuación, te proporciono los procedimientos detallados para crear y configurar el proyecto "Dulcería" en Django, paso por paso. Vamos a recorrer el proceso desde la creación de las carpetas hasta la implementación de las vistas y configuraciones necesarias para el funcionamiento del proyecto.
 
+Estructura del Proyecto:
+Curso_Django/
+└── Dulceria/
+    ├── .venv/                     # Entorno virtual
+    ├── backend_dulceria/          # Configuración del proyecto
+    │   ├── __init__.py
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    ├── app_dulceria/
+    │   ├── __init__.py
+    │   ├── models.py
+    │   ├── admin.py
+    │   ├── forms.py
+    │   ├── views.py
+    │   ├── urls.py
+    │   ├── templates/
+    │   │   ├── base.html
+    │   │   ├── listar_dulces.html
+    │   │   ├── detalle_dulce.html
+    │   │   ├── formulario_dulce.html
+    │   │   └── confirmar_borrar.html
+    │   └── static/
+    │       └── css/
+    │           └── styles.css
+    ├── media/                     # Imágenes subidas (creado automáticamente)
+    ├── manage.py
+    └── requirements.txt
+    
 1. Procedimiento para crear la carpeta del Proyecto:
 Crea una carpeta donde será almacenado el proyecto. Puedes hacerlo manualmente o usando la terminal de VS Code.
 mkdir UIII_Dulceria_0726
