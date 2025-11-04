@@ -6,113 +6,84 @@ A continuación, te proporciono los procedimientos detallados para crear y confi
 # ==========================================
 
 ```plaintext
-Curso_Django/
-└── Dulceria/
-    ├── .venv/                     # Entorno virtual
-    ├── backend_dulceria/           # Configuración del proyecto
-    │   ├── __init__.py
-    │   ├── settings.py
-    │   ├── urls.py
-    │   └── wsgi.py
-    ├── app_dulceria/
-    │   ├── __init__.py
-    │   ├── models.py
-    │   ├── admin.py
-    │   ├── forms.py
-    │   ├── views.py
-    │   ├── urls.py
-    │   ├── templates/
-    │   │   ├── base.html
-    │   │   ├── listar_productos.html
-    │   │   ├── detalle_producto.html
-    │   │   └── confirmar_borrar.html
-    │   └── static/
-    │       └── css/
-    │           └── styles.css
-    ├── media/                     # Imágenes subidas (creado automáticamente)
-    ├── manage.py
-    └── requirements.txt
+UIII_Dulceria_0726/
+ ├── .venv/
+ ├── backend_Dulceria/
+ ├── app_Dulceria/
+ │   ├── templates/
+ │   │   ├── dulce/
+ │   │   ├── base.html
+ │   │   ├── navbar.html
+ │   │   ├── footer.html
+ │   │   └── inicio.html
+ │   ├── models.py
+ │   ├── views.py
+ │   ├── urls.py
+ │   └── admin.py
+ ├── manage.py
 
 ```
+🧁 Proyecto Django: Dulcería
 
-Paso 1: Cambio en los Modelos
-    
-1. Procedimiento para crear la carpeta del Proyecto:
-Crea una carpeta donde será almacenado el proyecto. Puedes hacerlo manualmente o usando la terminal de VS Code.
+Lenguaje: Python
+Framework: Django
+Editor: Visual Studio Code
+Puerto: 0726
+
+📁 1. Crear carpeta del proyecto
 mkdir UIII_Dulceria_0726
+cd UIII_Dulceria_0726
 
-2. Procedimiento para abrir VS Code sobre la carpeta:
-Abre la terminal en la carpeta donde creaste el proyecto y luego ejecuta:
+💻 2. Abrir VS Code sobre la carpeta
 code .
 
-Esto abrirá VS Code en la carpeta UIII_Dulceria_0726.
-3. Procedimiento para abrir la terminal en VS Code:
-Para abrir la terminal dentro de VS Code, puedes usar el atajo de teclado:
-En Windows/Linux: Ctrl + ~
+🧭 3. Abrir terminal en VS Code
 
+Desde la barra superior:
 
-En Mac: Cmd + ~
+Ver → Terminal
 
-
-O bien, desde el menú en la parte superior:
- Terminal -> Nueva Terminal.
-4. Procedimiento para crear la carpeta entorno virtual “.venv” desde la terminal de VS Code:
-Crea un entorno virtual con el siguiente comando:
+🧩 4. Crear entorno virtual “.venv”
 python -m venv .venv
 
-Esto creará una carpeta llamada .venv dentro de tu proyecto.
-5. Procedimiento para activar el entorno virtual:
-Dependiendo de tu sistema operativo, usa uno de los siguientes comandos:
-Windows:
+⚙️ 5. Activar el entorno virtual
+En Windows:
+.venv\Scripts\activate
 
- .\.venv\Scripts\activate
+En macOS/Linux:
+source .venv/bin/activate
 
+🐍 6. Activar intérprete de Python
 
-Linux/Mac:
+En VS Code:
+Presiona Ctrl + Shift + P → Escribe “Python: Select Interpreter” → Selecciona el que diga .venv.
 
- source .venv/bin/activate
-
-
-Al activar el entorno virtual, deberías ver algo como (.venv) en la terminal.
-6. Procedimiento para activar el intérprete de Python:
-Una vez activado el entorno virtual, asegúrate de que VS Code esté usando el intérprete de Python correcto. Para hacerlo, ve a:
-Cmd+Shift+P (Mac) o Ctrl+Shift+P (Windows/Linux).
-
-
-Escribe y selecciona Python: Select Interpreter.
-
-
-Elige el intérprete dentro del entorno virtual que acabas de crear (.venv).
-
-
-7. Procedimiento para instalar Django:
-Ahora, instala Django en tu entorno virtual usando pip:
+📦 7. Instalar Django
 pip install django
 
-8. Procedimiento para crear el proyecto backend_Dulceria:
-Con Django instalado, crea el proyecto con el siguiente comando:
+🚀 8. Crear proyecto backend_Dulceria sin duplicar carpeta
 django-admin startproject backend_Dulceria .
 
-Asegúrate de usar el punto (.) al final para evitar que Django cree una subcarpeta.
-9. Procedimiento para ejecutar el servidor en el puerto 0726:
-Para ejecutar el servidor de desarrollo de Django en el puerto 0726, usa:
+
+(El punto evita que se cree una carpeta duplicada).
+
+🌐 9. Ejecutar servidor en el puerto 0726
 python manage.py runserver 0726
 
-10. Procedimiento para copiar y pegar el link en el navegador:
-Abre tu navegador y navega a:
-http://127.0.0.1:0726
+🔗 10. Copiar y pegar el link en el navegador
 
-Ahí verás la página de inicio de Django si todo está funcionando correctamente.
-11. Procedimiento para crear la aplicación app_Dulceria:
-Ahora crea la aplicación app_Dulceria dentro de tu proyecto Django:
+Abre en tu navegador:
+
+http://127.0.0.1:0726/
+
+🧱 11. Crear aplicación app_Dulceria
 python manage.py startapp app_Dulceria
 
-12. Modelo models.py (Dulces, Clientes, Pedidos):
-Ya proporcionaste los modelos. Aquí están con comentarios y formateo adecuado:
+🧬 12. Código del archivo models.py (app_Dulceria/models.py)
 from django.db import models
 
 # ==========================================
-# MODELO: Dulces
+# MODELO: DULCES
 # ==========================================
 class Dulce(models.Model):
     nombre = models.CharField(max_length=150, help_text="Nombre del dulce")
@@ -121,9 +92,10 @@ class Dulce(models.Model):
     stock = models.PositiveIntegerField(help_text="Cantidad de unidades en stock")
     categoria = models.CharField(max_length=50, help_text="Categoría del dulce (ej. Chocolates, Gomas, Caramelos)")
     fecha_disponibilidad = models.DateField(help_text="Fecha a partir de la cual el dulce está disponible")
-    
+
     def __str__(self):
         return self.nombre
+
 
 # ==========================================
 # MODELO: CLIENTES
@@ -138,6 +110,7 @@ class Cliente(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
+
 
 # ==========================================
 # MODELO: PEDIDOS
@@ -171,905 +144,245 @@ class Pedido(models.Model):
     id_dulce = models.ManyToManyField(Dulce, related_name="pedidos")
 
     def __str__(self):
-        return f"Pedido #{self.pk} de {self.cliente.nombre} - Estado: {self.estado}"
+        return f"Pedido #{self.pk} de {self.cliente_id.nombre} - Estado: {self.estado}"
 
-12.5. Procedimiento para realizar las migraciones:
-Ejecuta los siguientes comandos para realizar las migraciones de tus modelos en la base de datos:
+⚙️ 12.5 Realizar migraciones
 python manage.py makemigrations
 python manage.py migrate
 
-
-Continuación de los Procedimientos
-En los siguientes pasos, te guiaré sobre cómo implementar las vistas y configuraciones adicionales como las plantillas HTML, URLs, la creación de formularios y otras configuraciones necesarias para tu aplicación.
-Si deseas continuar con estos procedimientos, me avisas y los vamos detallando uno por uno.
-
-Procedimiento para crear el Proyecto y su Entorno:
-
-Procedimiento para crear carpeta del Proyecto:
-
-Crea la carpeta donde se almacenará el proyecto con el nombre UIII_Dulceria_0726:
-
-mkdir UIII_Dulceria_0726
-cd UIII_Dulceria_0726
-
-
-Procedimiento para abrir VS Code sobre la carpeta:
-
-Para abrir VS Code directamente sobre la carpeta creada, usa:
-
-code .
-
-
-Procedimiento para abrir terminal en VS Code:
-
-Abre la terminal en VS Code usando el atajo de teclado:
-
-Windows/Linux: Ctrl + ~
-
-Mac: Cmd + ~
-
-Procedimiento para crear carpeta entorno virtual .venv desde la terminal de VS Code:
-
-En la terminal, ejecuta el siguiente comando para crear un entorno virtual:
-
-python -m venv .venv
-
-
-Procedimiento para activar el entorno virtual:
-
-Para activar el entorno virtual, dependiendo de tu sistema operativo, ejecuta uno de los siguientes comandos:
-
-Windows:
-
-.venv\Scripts\activate
-
-
-Linux/Mac:
-
-source .venv/bin/activate
-
-
-Procedimiento para activar el intérprete de Python:
-
-Asegúrate de que VS Code esté usando el intérprete de Python del entorno virtual, el cual puedes configurar desde la paleta de comandos (Ctrl + Shift + P o Cmd + Shift + P en Mac) y luego buscar "Python: Select Interpreter" y seleccionar .venv.
-
-Procedimiento para instalar Django:
-
-Con el entorno virtual activado, instala Django ejecutando:
-
-pip install django
-
-
-Procedimiento para crear proyecto backend_Dulceria sin duplicar carpeta:
-
-Desde la terminal, crea el proyecto Django:
-
-django-admin startproject backend_Dulceria
-
-
-Procedimiento para ejecutar servidor en el puerto 0726:
-
-Corre el servidor Django en el puerto 0726:
-
-python manage.py runserver 0726
-
-
-Procedimiento para copiar y pegar el link en el navegador:
-
-Después de ejecutar el servidor, abre tu navegador y ve a:
-
-http://127.0.0.1:0726
-
-Modelo models.py:
-
-Aquí el modelo models.py:
-
-from django.db import models
-
-# ==========================================
-# MODELO: Dulces
-# ==========================================
-class Dulce(models.Model):
-    nombre = models.CharField(max_length=150, help_text="Nombre del dulce")
-    descripcion = models.TextField(blank=True, null=True, help_text="Descripción detallada del dulce")
-    precio = models.DecimalField(max_digits=10, decimal_places=2, help_text="Precio del dulce")
-    stock = models.PositiveIntegerField(help_text="Cantidad de unidades en stock")
-    categoria = models.CharField(max_length=50, help_text="Categoría del dulce (ej. Chocolates, Gomas, Caramelos)")
-    fecha_disponibilidad = models.DateField(help_text="Fecha a partir de la cual el dulce está disponible")
-
-    def __str__(self):
-        return self.nombre
-
-# ==========================================
-# MODELO: CLIENTES
-# ==========================================
-class Cliente(models.Model):
-    nombre = models.CharField(max_length=100, unique=True)
-    apellido = models.CharField(max_length=100, blank=True, null=True) 
-    email = models.EmailField(max_length=254, unique=True) 
-    telefono = models.CharField(max_length=20, blank=True, null=True)
-    direccion = models.CharField(max_length=255, blank=True, null=True)
-    fecha_registro = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.nombre} {self.apellido}"
-
-# ==========================================
-# MODELO: PEDIDOS
-# ==========================================
-class Pedido(models.Model):
-    cliente_id = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='pedidos')
-    direccion_envio = models.CharField(max_length=255)
-    TIPO_PEDIDO_CHOICES = [
-        ('estandar', 'Estándar'),
-        ('urgente', 'Urgente'),
-        ('personalizado', 'Personalizado'),
-    ]
-    tipo_pedido = models.CharField(max_length=20, choices=TIPO_PEDIDO_CHOICES, default='estandar')
-    fecha_pedido = models.DateTimeField(auto_now_add=True)
-
-    ESTADO_CHOICES = [
-        ('pendiente', 'Pendiente'),
-        ('procesando', 'Procesando'),
-        ('enviado', 'Enviado'),
-        ('entregado', 'Entregado'),
-        ('cancelado', 'Cancelado'),
-    ]
-    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='pendiente')
-
-    METODO_PAGO_CHOICES = [
-        ('tarjeta_credito', 'Tarjeta de Crédito'),
-        ('paypal', 'PayPal'),
-        ('transferencia', 'Transferencia Bancaria'),
-        ('efectivo', 'Efectivo al Recibir'),
-    ]
-    metodo_pago = models.CharField(max_length=50, choices=METODO_PAGO_CHOICES)
-    id_dulce = models.ManyToManyField(Dulce, related_name="pedidos")
-
-    def __str__(self):
-        return f"Pedido #{self.pk} de {self.cliente.nombre} - Estado: {self.estado}"
-
-Procedimientos adicionales:
-
-Procedimiento para realizar las migraciones (makemigrations y migrate):
-
-Ejecuta las migraciones para aplicar los modelos:
-
-python manage.py makemigrations
-python manage.py migrate
-
-
-Primero trabajamos con el modelo DULCES:
-
-Aquí empezarás a trabajar con el modelo de los "Dulces", añadiendo las vistas y la lógica de CRUD.
-
-En views.py de app_dulceria crear las funciones con sus códigos correspondientes:
-
-Define las funciones correspondientes como inicio_dulceria, agregar_dulce, actualizar_dulce, realizar_actualizacion_dulce, y borrar_dulce en views.py.
-
-Crear la carpeta templates dentro de app_Dulceria:
-
-Crea la estructura para las plantillas:
-
-mkdir app_Dulceria/templates
-
-
-En la carpeta templates, crear los archivos HTML (base.html, header.html, navbar.html, footer.html, inicio.html).
-
-En el archivo base.html, agregar Bootstrap para CSS y JS.
-
-En el archivo navbar.html, incluir las opciones de navegación con iconos.
-
-En el archivo footer.html, incluir derechos de autor, fecha del sistema, y “Creado por Dominique Vaquera, Cbtis 128”. Mantenerlo fijo al final de la página.
-
-En el archivo inicio.html, mostrar información del sistema más una imagen tomada desde la red sobre cinepolis.
-
-Crear la subcarpeta dulce dentro de app_Dulceria/templates:
-
-mkdir app_Dulceria/templates/dulce
-
-
-Crear los archivos HTML correspondientes en app_Dulceria/templates/dulce (agregar_dulce.html, ver_dulces.html, actualizar_dulce.html, borrar_dulce.html).
-
-No utilizar forms.py en este caso.
-
-Procedimiento para crear el archivo urls.py en app_Dulceria para las operaciones CRUD.
-
-Agregar app_Dulceria en settings.py de backend_Dulceria.
-
-Configurar urls.py en backend_Dulceria para enlazar con app_Dulceria.
-
-Registrar los modelos en admin.py y volver a realizar las migraciones.
-
-Utilizar colores suaves y atractivos, código web sencillo.
-
-No validar entrada de datos.
-
-Crear la estructura completa de carpetas y archivos al inicio.
-
-Ejecutar servidor en el puerto 0726 para probar el proyecto.
-
-Paso 1: Cambio en los Modelos
-
-Adaptaremos los modelos a la idea de una dulcería, donde los productos serían dulces y podrían tener atributos como tipo, sabor, y foto.
-
-app_dulceria/models.py
-```plaintext
-from django.db import models
-
-class Dulce(models.Model):
-    nombre = models.CharField(max_length=100, help_text="Nombre del dulce")
-    sabor = models.CharField(max_length=100, help_text="Sabor del dulce")
-    foto_dulce = models.ImageField(upload_to='img_dulces/', blank=True, null=True)
-
-    def __str__(self):
-        return self.nombre
-
-    class Meta:
-        verbose_name = "Dulce"
-        verbose_name_plural = "Dulces"
-```
-Paso 2: Cambiar Vistas
-
-Las vistas reflejarán lo que se muestra en una dulcería: la lista de dulces, los detalles de un dulce específico, la creación, edición y eliminación de dulces.
-```plaintext
-app_dulceria/views.py
-```
-```plaintext
-from django.shortcuts import render, get_object_or_404, redirect
+🍬 13. Trabajaremos primero con el modelo Dulce
+👁️‍🗨️ 14. Código de views.py (CRUD de Dulces)
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Dulce
-from .forms import DulceForm
-
-def listar_dulces(request):
-    dulces = Dulce.objects.all()
-    return render(request, 'listar_dulces.html', {'dulces': dulces})
-
-def detalle_dulce(request, dulce_id):
-    dulce = get_object_or_404(Dulce, id=dulce_id)
-    return render(request, 'detalle_dulce.html', {'dulce': dulce})
-
-def crear_dulce(request):
-    if request.method == 'POST':
-        form = DulceForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('app_dulceria:listar_dulces')
-    else:
-        form = DulceForm()
-    return render(request, 'formulario_dulce.html', {'form': form, 'titulo': 'Crear Dulce'})
-
-def editar_dulce(request, dulce_id):
-    dulce = get_object_or_404(Dulce, id=dulce_id)
-    if request.method == 'POST':
-        form = DulceForm(request.POST, request.FILES, instance=dulce)
-        if form.is_valid():
-            form.save()
-            return redirect('app_dulceria:detalle_dulce', dulce_id=dulce.id)
-    else:
-        form = DulceForm(instance=dulce)
-    return render(request, 'formulario_dulce.html', {'form': form, 'titulo': 'Editar Dulce'})
-
-def borrar_dulce(request, dulce_id):
-    dulce = get_object_or_404(Dulce, id=dulce_id)
-    if request.method == 'POST':
-        dulce.delete()
-        return redirect('app_dulceria:listar_dulces')
-    return render(request, 'confirmar_borrar.html', {'dulce': dulce})
-```
-Paso 3: Formularios
-
-El formulario será para crear y editar dulces.
-```plaintext
-app_dulceria/forms.py
-
-from django import forms
-from .models import Dulce
-
-class DulceForm(forms.ModelForm):
-    class Meta:
-        model = Dulce
-        fields = ['nombre', 'sabor', 'foto_dulce']
-```
-Paso 4: Actualizar Plantillas HTML
-
-Las plantillas de la aplicación cambiarán los textos y las imágenes de "artistas" a "dulces".
-```plaintext
-app_dulceria/templates/base.html (cambiar los nombres y clases de los enlaces)
-
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block titulo %}Dulcería{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body>
-    <div class="wrapper">
-        <header class="main-header">
-            <h1><a href="{% url 'app_dulceria:listar_dulces' %}">🍬 Dulcería</a></h1>
-            <nav class="main-nav">
-                <a href="{% url 'app_dulceria:listar_dulces' %}">🍬 Dulces</a>
-                <a href="{% url 'app_dulceria:crear_dulce' %}">➕ Nuevo Dulce</a>
-            </nav>
-        </header>
-
-        <main class="main-content">
-            {% block contenido %}{% endblock %}
-        </main>
-
-        <footer class="main-footer">
-            <p>© 2025 Dulcería - ¡La mejor selección de dulces!</p>
-        </footer>
-    </div>
-</body>
-</html>
-
-```
-```plaintext
-app_dulceria/templates/listar_dulces.html
-
-{% extends 'base.html' %}
-{% block titulo %}Dulces | Dulcería{% endblock %}
-
-{% block contenido %}
-<div class="page-header">
-    <h2>Dulces Disponibles</h2>
-    <a href="{% url 'app_dulceria:crear_dulce' %}" class="btn btn-primary">+ Agregar Dulce</a>
-</div>
-
-<ul class="dulce-grid">
-    {% for dulce in dulces %}
-    <li class="dulce-card">
-        <a href="{% url 'app_dulceria:detalle_dulce' dulce.id %}">
-            {% if dulce.foto_dulce %}
-                <img src="{{ dulce.foto_dulce.url }}" alt="Foto de {{ dulce.nombre }}" class="dulce-img">
-            {% else %}
-                <div class="dulce-placeholder">🍬</div>
-            {% endif %}
-            <h3>{{ dulce.nombre }}</h3>
-            <p class="dulce-sabor">{{ dulce.sabor }}</p>
-        </a>
-    </li>
-    {% empty %}
-    <li class="no-dulces">No hay dulces disponibles.</li>
-    {% endfor %}
-</ul>
-{% endblock %}
-```
-```plaintext
-app_dulceria/templates/detalle_dulce.html
-
-{% extends 'base.html' %}
-{% block titulo %}{{ dulce.nombre }} | Dulcería{% endblock %}
-
-{% block contenido %}
-<article class="dulce-detail">
-    <div class="dulce-banner">
-        {% if dulce.foto_dulce %}
-            <img src="{{ dulce.foto_dulce.url }}" alt="Foto de {{ dulce.nombre }}" class="detail-photo">
-        {% else %}
-            <div class="detail-placeholder">🍬</div>
-        {% endif %}
-        <div class="dulce-info">
-            <h1>{{ dulce.nombre }}</h1>
-            <h3>Sabor: {{ dulce.sabor }}</h3>
-        </div>
-    </div>
-
-    <div class="detail-actions">
-        <a href="{% url 'app_dulceria:editar_dulce' dulce.id %}" class="btn btn-secondary">✏️ Editar</a>
-        <a href="{% url 'app_dulceria:borrar_dulce' dulce.id %}" class="btn btn-danger">🗑️ Eliminar</a>
-    </div>
-</article>
-{% endblock %}
-
-```
-```plaintext
-app_dulceria/templates/formulario_dulce.html
-
-{% extends 'base.html' %}
-{% block titulo %}{{ titulo }} | Dulcería{% endblock %}
-
-{% block contenido %}
-<h2>{{ titulo }}</h2>
-<form method="post" enctype="multipart/form-data" class="form-styled">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <div class="actions">
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="{% url 'app_dulceria:listar_dulces'
-```
-
-
-¡Claro! A continuación te dejo una versión más detallada de cada uno de los pasos que necesitas seguir para completar tu proyecto Dulcería en Django, organizados de manera clara y estructurada. Esto incluye todos los procedimientos necesarios, detalles sobre cada archivo, y la lógica que debes implementar.
-
-1. Crear la carpeta del Proyecto:
-Procedimiento:
-
-Crea una nueva carpeta en tu máquina donde se almacenará todo el proyecto. Puedes hacerlo manualmente o mediante la terminal (línea de comandos).
-
-Comando en terminal (Linux/Mac/Windows):
-```plaintext
-mkdir UIII_Dulceria_0726
-cd UIII_Dulceria_0726
-```
-
-Este paso crea una carpeta llamada UIII_Dulceria_0726 y entra dentro de ella.
-
-2. Abrir VS Code sobre la carpeta creada:
-Procedimiento:
-
-Abre la carpeta que acabas de crear en Visual Studio Code. Puedes hacerlo desde la terminal o directamente desde la interfaz de VS Code.
-
-Comando en terminal:
-
-code .
-
-
-Esto abrirá VS Code en la carpeta actual.
-
-3. Abrir terminal en VS Code:
-Procedimiento:
-
-Una vez que tengas VS Code abierto, abre la terminal integrada dentro del editor para trabajar con los comandos.
-
-Atajo de teclado:
-
-Windows/Linux: Ctrl + ~
-
-Mac: Cmd + ~
-
-4. Crear el entorno virtual (.venv) desde la terminal de VS Code:
-Procedimiento:
-
-Desde la terminal integrada en VS Code, crea un entorno virtual. Esto es esencial para gestionar las dependencias de Python y mantener tu proyecto aislado.
-
-Comando para crear entorno virtual:
-
-python -m venv .venv
-
-
-Esto creará una carpeta llamada .venv en la que se almacenarán las dependencias del proyecto.
-
-5. Activar el entorno virtual:
-Procedimiento:
-
-Una vez creado el entorno virtual, deberás activarlo. Dependiendo de tu sistema operativo, utiliza uno de los siguientes comandos:
-
-Comando para activar el entorno virtual:
-
-Windows:
-
-.venv\Scripts\activate
-
-
-Linux/Mac:
-
-source .venv/bin/activate
-
-
-Si todo ha salido bien, verás que el nombre del entorno virtual (.venv) aparece en tu terminal.
-
-6. Activar el intérprete de Python en VS Code:
-Procedimiento:
-
-Para asegurarte de que VS Code está usando el entorno virtual como el intérprete de Python, ve a la paleta de comandos de VS Code (presionando Ctrl + Shift + P o Cmd + Shift + P en Mac) y busca "Python: Select Interpreter".
-
-Selecciona el intérprete que se encuentra dentro de tu carpeta .venv.
-
-7. Instalar Django:
-Procedimiento:
-
-Con el entorno virtual activado, ahora puedes instalar Django, que es el framework que utilizarás para desarrollar el proyecto.
-
-Comando para instalar Django:
-
-pip install django
-
-
-Este comando instalará la última versión de Django dentro de tu entorno virtual.
-
-8. Crear el proyecto backend_Dulceria:
-Procedimiento:
-
-Con Django ya instalado, crea el proyecto principal de tu backend. Este es el contenedor principal del proyecto en el que se manejarán las configuraciones y las aplicaciones.
-
-Comando para crear el proyecto:
-
-django-admin startproject backend_Dulceria
-
-
-Este comando creará una nueva carpeta llamada backend_Dulceria, dentro de la cual estará toda la configuración del proyecto Django.
-
-9. Ejecutar el servidor en el puerto 0726:
-Procedimiento:
-
-Desde la terminal, navega hasta la carpeta del proyecto (si aún no estás dentro de ella) y ejecuta el servidor de desarrollo de Django.
-
-Comando para ejecutar el servidor:
-
-python manage.py runserver 0726
-
-
-Esto ejecutará el servidor de desarrollo de Django en el puerto 0726. Ahora puedes abrir tu navegador y acceder a la URL http://127.0.0.1:0726 para ver la página de bienvenida de Django.
-
-10. Copiar y pegar el link en el navegador:
-Procedimiento:
-
-Abre un navegador web y navega a la siguiente URL para ver el servidor en funcionamiento:
-
-http://127.0.0.1:0726
-
-11. Crear el modelo Dulce en models.py:
-Procedimiento:
-
-Dirígete a la carpeta backend_Dulceria y dentro de ella abre el archivo models.py que está en el directorio app_Dulceria.
-
-Define el modelo Dulce para almacenar la información de los dulces disponibles en la tienda:
-```plaintext
-from django.db import models
-
-class Dulce(models.Model):
-    nombre = models.CharField(max_length=150, help_text="Nombre del dulce")
-    descripcion = models.TextField(blank=True, null=True, help_text="Descripción detallada del dulce")
-    precio = models.DecimalField(max_digits=10, decimal_places=2, help_text="Precio del dulce")
-    stock = models.PositiveIntegerField(help_text="Cantidad de unidades en stock")
-    categoria = models.CharField(max_length=50, help_text="Categoría del dulce (ej. Chocolates, Gomas, Caramelos)")
-    fecha_disponibilidad = models.DateField(help_text="Fecha a partir de la cual el dulce está disponible")
-
-    def __str__(self):
-        return self.nombre
-```
-
-Este modelo tiene atributos para el nombre, descripción, precio, stock, categoría y fecha de disponibilidad del dulce.
-
-12. Realizar las migraciones (makemigrations y migrate):
-Procedimiento:
-
-Para que los cambios en los modelos se apliquen a la base de datos, debes ejecutar las migraciones. Django genera scripts de migración que luego aplicas a la base de datos.
-
-Comando para crear migraciones:
-
-python manage.py makemigrations
-
-
-Comando para aplicar las migraciones:
-
-python manage.py migrate
-
-
-Estos dos comandos aseguran que la estructura de la base de datos esté actualizada con los nuevos modelos definidos en models.py.
-
-13. Trabajar con el modelo DULCES en las vistas (views.py):
-Procedimiento:
-
-Crea las vistas necesarias para gestionar los dulces en el sistema, tales como ver, agregar, editar y borrar dulces.
-
-Función de ejemplo en views.py:
-```plaintext
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Dulce
-from django.http import HttpResponse
 
 def inicio_dulceria(request):
-    # Vista que muestra todos los dulces disponibles
-    dulces = Dulce.objects.all()
-    return render(request, 'inicio.html', {'dulces': dulces})
+    return render(request, 'inicio.html')
 
 def agregar_dulce(request):
     if request.method == 'POST':
-        # Lógica para agregar un dulce
-        nombre = request.POST.get('nombre')
-        precio = request.POST.get('precio')
-        dulce = Dulce.objects.create(nombre=nombre, precio=precio)
-        return redirect('inicio_dulceria')  # Redirige a la vista de inicio
-    return render(request, 'agregar_dulce.html')
-```
-14. Crear la carpeta templates dentro de app_Dulceria:
-Procedimiento:
+        nombre = request.POST['nombre']
+        descripcion = request.POST['descripcion']
+        precio = request.POST['precio']
+        stock = request.POST['stock']
+        categoria = request.POST['categoria']
+        fecha_disponibilidad = request.POST['fecha_disponibilidad']
+        Dulce.objects.create(
+            nombre=nombre,
+            descripcion=descripcion,
+            precio=precio,
+            stock=stock,
+            categoria=categoria,
+            fecha_disponibilidad=fecha_disponibilidad
+        )
+        return redirect('ver_dulces')
+    return render(request, 'dulce/agregar_dulce.html')
 
-En la carpeta app_Dulceria, crea una subcarpeta llamada templates donde colocarás todos los archivos HTML para las vistas.
+def ver_dulces(request):
+    dulces = Dulce.objects.all()
+    return render(request, 'dulce/ver_dulces.html', {'dulces': dulces})
 
-Comando en terminal:
+def actualizar_dulce(request, id):
+    dulce = get_object_or_404(Dulce, id=id)
+    return render(request, 'dulce/actualizar_dulce.html', {'dulce': dulce})
 
-mkdir app_Dulceria/templates
+def realizar_actualizacion_dulce(request, id):
+    dulce = get_object_or_404(Dulce, id=id)
+    dulce.nombre = request.POST['nombre']
+    dulce.descripcion = request.POST['descripcion']
+    dulce.precio = request.POST['precio']
+    dulce.stock = request.POST['stock']
+    dulce.categoria = request.POST['categoria']
+    dulce.fecha_disponibilidad = request.POST['fecha_disponibilidad']
+    dulce.save()
+    return redirect('ver_dulces')
 
+def borrar_dulce(request, id):
+    dulce = get_object_or_404(Dulce, id=id)
+    dulce.delete()
+    return redirect('ver_dulces')
 
-Dentro de esta carpeta, crea archivos HTML como base.html, header.html, footer.html, etc., que compartirán el mismo diseño base.
+🧾 15. Crear carpeta templates
+app_Dulceria/
+ └── templates/
 
-15. Agregar Bootstrap en base.html:
-Procedimiento:
+🧱 16. Archivos dentro de templates
+templates/
+ ├── base.html
+ ├── header.html
+ ├── navbar.html
+ ├── footer.html
+ └── inicio.html
 
-En el archivo base.html, agrega el enlace a Bootstrap para utilizar su diseño responsivo y fácil de usar.
-```plaintext
+🎨 17. base.html (Bootstrap)
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dulcería</title>
-    <!-- Incluir Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
-<body>
-    {% include 'header.html' %}
-    <div class="container">
-        {% block content %}
-        {% endblock %}
+<body class="bg-light">
+    {% include 'navbar.html' %}
+    <div class="container mt-4">
+        {% block contenido %}{% endblock %}
     </div>
     {% include 'footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-```
-16. Crear otros archivos HTML como navbar.html, footer.html, etc.:
-Procedimiento:
 
-navbar.html: Aquí incluirás la barra de navegación con las opciones del sistema y los submenús:
-```plaintext
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Sistema de Administración Dulcería</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Inicio</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Dulces</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Clientes</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Pedidos</a>
-      </li>
-    </ul>
+🧭 18. navbar.html
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">🍭 Sistema de Administración Dulcería</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="{% url 'inicio_dulceria' %}">🏠 Inicio</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">🍬 Dulces</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'agregar_dulce' %}">Agregar Dulce</a></li>
+            <li><a class="dropdown-item" href="{% url 'ver_dulces' %}">Ver Dulces</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#">👤 Clientes</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Agregar Cliente</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#">📦 Pedidos</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Agregar Pedido</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
-```
-17. Procedimiento para crear las URLs en urls.py:
-Procedimiento:
 
-Crea el archivo urls.py dentro de app_Dulceria para definir las rutas de las vistas CRUD. Por ejemplo:
-```plaintext
+🦶 19. footer.html
+<footer class="bg-dark text-white text-center py-3 fixed-bottom">
+    © <span id="year"></span> | Creado por Dominique Vaquera, CBTIS 128
+    <script>document.getElementById("year").innerHTML = new Date().getFullYear();</script>
+</footer>
+
+🏠 20. inicio.html
+{% extends 'base.html' %}
+{% block contenido %}
+<div class="text-center">
+    <h1>Bienvenido al Sistema de Administración de Dulcería</h1>
+    <p>Gestione sus productos, clientes y pedidos de forma sencilla.</p>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Cinepolis_logo.svg" width="300">
+</div>
+{% endblock %}
+
+📂 21. Subcarpeta dulce
+app_Dulceria/templates/dulce/
+
+📄 22. Archivos HTML CRUD Dulce
+
+Ejemplo: ver_dulces.html
+
+{% extends 'base.html' %}
+{% block contenido %}
+<h2 class="text-center mb-4">Lista de Dulces</h2>
+<table class="table table-striped table-hover">
+    <thead class="table-primary">
+        <tr>
+            <th>Nombre</th><th>Precio</th><th>Stock</th><th>Categoría</th><th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for d in dulces %}
+        <tr>
+            <td>{{ d.nombre }}</td><td>{{ d.precio }}</td><td>{{ d.stock }}</td><td>{{ d.categoria }}</td>
+            <td>
+                <a href="{% url 'actualizar_dulce' d.id %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'borrar_dulce' d.id %}" class="btn btn-danger btn-sm">Borrar</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+
+(Los demás archivos —agregar, actualizar, borrar— siguen formato simple con formularios HTML sin forms.py).
+
+🌐 24. Crear urls.py en app_Dulceria
 from django.urls import path
 from . import views
 
 urlpatterns = [
     path('', views.inicio_dulceria, name='inicio_dulceria'),
-    path('agregar/', views.agregar_dulce, name='agregar_dulce'),
+    path('agregar_dulce/', views.agregar_dulce, name='agregar_dulce'),
+    path('ver_dulces/', views.ver_dulces, name='ver_dulces'),
+    path('actualizar_dulce/<int:id>/', views.actualizar_dulce, name='actualizar_dulce'),
+    path('realizar_actualizacion_dulce/<int:id>/', views.realizar_actualizacion_dulce, name='realizar_actualizacion_dulce'),
+    path('borrar_dulce/<int:id>/', views.borrar_dulce, name='borrar_dulce'),
 ]
-```
-Conclusión:
 
-Estos pasos cubren desde la creación de tu entorno de desarrollo hasta la implementación de los modelos y vistas CRUD básicos. ¡Espero que con estos detalles puedas avanzar fácilmente con tu proyecto! Si tienes alguna pregunta sobre algún paso, no dudes en preguntar.
+⚙️ 25. Agregar app_Dulceria en settings.py
+INSTALLED_APPS = [
+    ...
+    'app_Dulceria',
+]
 
-Entendido! Voy a desglosar la información con el nivel de detalle más completo posible, cubriendo todos los aspectos desde la instalación hasta la configuración completa del proyecto Django, para que puedas implementarlo paso a paso sin dejar nada al azar. Voy a incluir información extra, explicaciones, posibles errores comunes y cómo solucionarlos, ejemplos de código más detallados, y más. Esto debería ayudarte a comprender completamente cómo crear y desarrollar tu proyecto de Dulcería en Django.
+🧭 26. Configurar urls.py de backend_Dulceria
 
-1. Crear la Carpeta del Proyecto (UIII_Dulceria_0726)
-Explicación y Procedimiento:
+Archivo: backend_Dulceria/urls.py
 
-Crear la carpeta del proyecto:
-Lo primero que necesitas hacer es crear una carpeta donde se almacenará todo tu proyecto. Esto se hace con el comando mkdir en la terminal.
+from django.contrib import admin
+from django.urls import path, include
 
-Comando en terminal:
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('app_Dulceria.urls')),
+]
 
-Linux/Mac:
-```plaintext
-mkdir UIII_Dulceria_0726
-cd UIII_Dulceria_0726
-```
+🛠️ 27. Registrar modelos en admin.py
+from django.contrib import admin
+from .models import Dulce, Cliente, Pedido
 
-Windows (CMD o PowerShell):
-```plaintext
-mkdir UIII_Dulceria_0726
-cd UIII_Dulceria_0726
-```
+admin.site.register(Dulce)
+admin.site.register(Cliente)
+admin.site.register(Pedido)
 
-Esto crea una carpeta llamada UIII_Dulceria_0726 y navega hacia ella.
 
-¿Por qué se hace esto?
-Crear una carpeta base es importante porque en ella se almacenarán tanto el entorno virtual, las aplicaciones Django, como los archivos de configuración y plantillas.
+Volver a migrar:
 
-2. Abrir VS Code en la Carpeta Creada
-Explicación y Procedimiento:
+python manage.py makemigrations
+python manage.py migrate
 
-Abrir VS Code desde la terminal:
-Para trabajar en VS Code directamente desde la carpeta que creaste, puedes hacerlo desde la terminal de la siguiente manera.
+🌈 28. Estilo general
 
-Comando en terminal:
+Usar colores suaves, modernos y Bootstrap 5 (ya incluido).
 
-code .
+🧩 29. Estructura completa
+UIII_Dulceria_0726/
+ ├── .venv/
+ ├── backend_Dulceria/
+ ├── app_Dulceria/
+ │   ├── templates/
+ │   │   ├── dulce/
+ │   │   ├── base.html
+ │   │   ├── navbar.html
+ │   │   ├── footer.html
+ │   │   └── inicio.html
+ │   ├── models.py
+ │   ├── views.py
+ │   ├── urls.py
+ │   └── admin.py
+ ├── manage.py
 
-
-Esto abrirá VS Code en la carpeta actual.
-
-¿Por qué VS Code?
-Visual Studio Code es un editor de código ligero y extensible, ideal para proyectos Django. Tiene soporte integrado para Python y Django, lo que facilita la edición y depuración del código.
-
-3. Abrir Terminal en VS Code
-Explicación y Procedimiento:
-
-Abrir terminal integrada en VS Code:
-Si no ves la terminal en VS Code, abre la terminal integrada presionando Ctrl + ~ en Windows o Linux, o Cmd + ~ en Mac.
-
-Pasos:
-
-Abre VS Code.
-
-Haz clic en el menú Ver y selecciona Terminal.
-
-¿Por qué se usa la terminal integrada?
-La terminal integrada permite ejecutar comandos sin salir de VS Code, lo que hace que sea más eficiente trabajar con los comandos del proyecto.
-
-4. Crear el Entorno Virtual .venv
-Explicación y Procedimiento:
-
-¿Por qué un entorno virtual?
-El entorno virtual es una forma de aislar las dependencias de tu proyecto de otras instalaciones de Python en tu sistema. Así, evitas conflictos entre versiones de librerías.
-
-Crear el entorno virtual:
-Desde la terminal de VS Code, ejecuta el siguiente comando para crear el entorno virtual:
-
-Comando:
-
-python -m venv .venv
-
-
-Esto crea una carpeta oculta llamada .venv que contendrá el entorno virtual de Python.
-
-¿Por qué usar .venv?
-El nombre .venv es una convención para nombrar la carpeta del entorno virtual. La “.venv” indica que es un directorio oculto en sistemas Unix, pero es totalmente accesible.
-
-5. Activar el Entorno Virtual
-Explicación y Procedimiento:
-
-Activar el entorno virtual:
-Para activar el entorno virtual, necesitas ejecutar el comando correspondiente según tu sistema operativo:
-
-Windows (CMD/PowerShell):
-
-.venv\Scripts\activate
-
-
-Linux/Mac:
-
-source .venv/bin/activate
-
-
-¿Por qué activar el entorno virtual?
-Una vez activado el entorno virtual, cualquier librería que instales con pip se instalará únicamente dentro de ese entorno, asegurando que tu proyecto no tenga dependencias globales.
-
-Verificación:
-Cuando el entorno virtual esté activado, deberías ver el nombre de tu entorno virtual en la terminal como prefijo (ejemplo: (.venv)).
-
-6. Seleccionar el Intérprete de Python en VS Code
-Explicación y Procedimiento:
-
-Seleccionar el intérprete de Python adecuado:
-Para asegurarte de que VS Code utiliza el entorno virtual, abre la paleta de comandos con Ctrl + Shift + P o Cmd + Shift + P y busca “Python: Select Interpreter”.
-
-Seleccionar el intérprete en .venv:
-Elige el intérprete dentro de la carpeta .venv para asegurarte de que VS Code usará el entorno virtual para el proyecto.
-
-7. Instalar Django
-Explicación y Procedimiento:
-
-Instalar Django dentro del entorno virtual:
-Con el entorno virtual activado, instala Django con el siguiente comando:
-
-Comando:
-
-pip install django
-
-
-Verificación:
-Puedes verificar que Django está instalado correctamente ejecutando:
-
-python -m django --version
-
-
-Esto debe devolver la versión de Django instalada, por ejemplo, 4.0.1.
-
-8. Crear el Proyecto Django backend_Dulceria
-Explicación y Procedimiento:
-
-Crear el proyecto Django:
-Usando el comando django-admin startproject, crea el proyecto principal de tu backend.
-
-Comando:
-
-django-admin startproject backend_Dulceria
-
-
-Estructura del Proyecto:
-El comando anterior crea una estructura básica del proyecto con los siguientes archivos y carpetas:
-
-backend_Dulceria/ (carpeta principal)
-
-backend_Dulceria/ (subcarpeta de configuración)
-
-settings.py (configuración principal)
-
-urls.py (enrutamiento de URLs)
-
-wsgi.py (configuración de despliegue)
-
-asgi.py (configuración de comunicación asíncrona)
-
-manage.py (herramienta de administración de Django)
-
-9. Ejecutar el Servidor en el Puerto 0726
-Explicación y Procedimiento:
-
-Ejecutar el servidor de desarrollo:
-Para ver tu proyecto en funcionamiento, ejecuta el servidor de desarrollo de Django con el siguiente comando:
-
-Comando:
-
+✅ 30. Proyecto totalmente funcional
+🚀 31. Ejecutar servidor
 python manage.py runserver 0726
 
 
-Acceder al servidor:
-Ahora, abre tu navegador y visita la URL: http://127.0.0.1:0726.
+Abre en navegador:
 
-Resultado esperado: Verás la página de bienvenida de Django, que confirma que el servidor está funcionando correctamente.
+http://127.0.0.1:0726/
 
-10. Copiar y Pegar el Link en el Navegador
-Explicación y Procedimiento:
-
-Acceso al servidor:
-Copia el enlace http://127.0.0.1:0726 y pégalo en tu navegador para ver la interfaz predeterminada de Django.
-
-11. Crear el Modelo Dulce en models.py
-Explicación y Procedimiento:
-
-Estructura del Modelo Dulce:
-En la carpeta backend_Dulceria/app_Dulceria, abre el archivo models.py y define un modelo para los dulces.
-```plaintext
-from django.db import models
-
-class Dulce(models.Model):
-    nombre = models.CharField(max_length=150, help_text="Nombre del dulce")
-    descripcion = models.TextField(blank=True, null=True, help_text="Descripción detallada del dulce")
-    precio = models.DecimalField(max_digits=10, decimal_places=2, help_text="Precio del dulce")
-    stock = models.PositiveIntegerField(help_text="Cantidad de unidades en stock")
-    categoria = models.CharField(max_length=50, help_text="Categoría del dulce")
-    fecha_disponibilidad = models.DateField(help_text="Fecha de disponibilidad")
-
-    def __str__(self):
-        return self.nombre
-```
-
-¿Por qué definir un modelo?
-Este modelo representa la información básica de un dulce en la tienda. Los campos incluyen el nombre, precio, stock, categoría, y fecha de disponibilidad.
-
-12. Realizar Migraciones (makemigrations y migrate)
-Explicación y Procedimiento:
-
-Crear las migraciones para el modelo:
-Django necesita generar los scripts para crear la tabla correspondiente en la base de datos.
-
-Comando:
-
-python manage.py makemigrations
-
-
-Aplicar las migraciones:
-Después de generar las migraciones, aplica los cambios a la base de datos:
-
-Comando:
-
-python manage.py migrate
-
-
-¿Por qué migraciones?
-Las migraciones permiten que Django cree y actualice la base de datos según la definición de los modelos.
-
-Conclusión Final:
-
-Aquí hemos cubierto los primeros pasos básicos y más detallados para crear tu proyecto Django, crear un entorno virtual, instalar Django, y crear el modelo Dulce. Cada paso está completamente explicado y detallado con los comandos, razones, y explicaciones sobre por qué hacemos cada cosa. Si necesitas más detalles o profundizar más en alguna parte, avísame y te proporcionaré más información.
