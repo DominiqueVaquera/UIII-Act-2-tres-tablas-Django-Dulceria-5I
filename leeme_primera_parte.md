@@ -9,21 +9,29 @@ A continuación, te proporciono los procedimientos detallados para crear y confi
 UIII_Dulceria_0726/
  ├── .venv/
  ├── backend_Dulceria/
+ │   │   ├── __init__.py
+ │   │   ├── settings.py
+ │   │   ├── urls.py
+ │   │   └── wsgi.py
  ├── app_Dulceria/
  │   ├── templates/
  │   │   ├── base.html
  │   │   ├── navbar.html
  │   │   ├── footer.html
  │   │   ├── inicio.html
- |   |   ├── agregar_dulce.html 
- │   |   ├── ver_dulces.html 
- │   |   ├── actualizar_dulce.html 
- │   |   └── borrar_dulce.html 
+ │   │   └── dulce/
+ |   |       ├── agregar_dulce.html 
+ │   |       ├── ver_dulces.html 
+ │   |       ├── actualizar_dulce.html 
+ │   |       └── borrar_dulce.html 
  │   ├── models.py
  │   ├── views.py
  │   ├── urls.py
- │   └── admin.py
+ │   ├── tests.py
+ │   ├── admin.py
+ │   └── __init__.py
  ├── manage.py
+ └── .venv/
 
 ```
 # ==========================================
@@ -166,19 +174,21 @@ python manage.py migrate
 # 👁️‍🗨️ 14. Código de views.py (CRUD de Dulces)
 ```plaintext
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Dulce
+from .models import Dulce, Cliente, Pedido
 
 def inicio_dulceria(request):
-    return render(request, 'inicio.html')
+    return render(request, 'app_Dulceria/inicio.html')
 
+# VISTAS PARA DULCES
 def agregar_dulce(request):
     if request.method == 'POST':
-        nombre = request.POST['nombre']
-        descripcion = request.POST['descripcion']
-        precio = request.POST['precio']
-        stock = request.POST['stock']
-        categoria = request.POST['categoria']
-        fecha_disponibilidad = request.POST['fecha_disponibilidad']
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        precio = request.POST.get('precio')
+        stock = request.POST.get('stock')
+        categoria = request.POST.get('categoria')
+        fecha_disponibilidad = request.POST.get('fecha_disponibilidad')
+        
         Dulce.objects.create(
             nombre=nombre,
             descripcion=descripcion,
@@ -188,30 +198,41 @@ def agregar_dulce(request):
             fecha_disponibilidad=fecha_disponibilidad
         )
         return redirect('ver_dulces')
-    return render(request, 'dulce/agregar_dulce.html')
+    
+    return render(request, 'app_Dulceria/dulce/agregar_dulce.html')
 
 def ver_dulces(request):
     dulces = Dulce.objects.all()
-    return render(request, 'dulce/ver_dulces.html', {'dulces': dulces})
+    return render(request, 'app_Dulceria/dulce/ver_dulces.html', {'dulces': dulces})
 
 def actualizar_dulce(request, id):
     dulce = get_object_or_404(Dulce, id=id)
-    return render(request, 'dulce/actualizar_dulce.html', {'dulce': dulce})
+    return render(request, 'app_Dulceria/dulce/actualizar_dulce.html', {'dulce': dulce})
 
 def realizar_actualizacion_dulce(request, id):
-    dulce = get_object_or_404(Dulce, id=id)
-    dulce.nombre = request.POST['nombre']
-    dulce.descripcion = request.POST['descripcion']
-    dulce.precio = request.POST['precio']
-    dulce.stock = request.POST['stock']
-    dulce.categoria = request.POST['categoria']
-    dulce.fecha_disponibilidad = request.POST['fecha_disponibilidad']
-    dulce.save()
+    if request.method == 'POST':
+        dulce = get_object_or_404(Dulce, id=id)
+        dulce.nombre = request.POST.get('nombre')
+        dulce.descripcion = request.POST.get('descripcion')
+        dulce.precio = request.POST.get('precio')
+        dulce.stock = request.POST.get('stock')
+        dulce.categoria = request.POST.get('categoria')
+        dulce.fecha_disponibilidad = request.POST.get('fecha_disponibilidad')
+        dulce.save()
+        return redirect('ver_dulces')
+    
     return redirect('ver_dulces')
 
 def borrar_dulce(request, id):
     dulce = get_object_or_404(Dulce, id=id)
-    dulce.delete()
+    return render(request, 'app_Dulceria/dulce/borrar_dulce.html', {'dulce': dulce})
+
+def realizar_borrado_dulce(request, id):
+    if request.method == 'POST':
+        dulce = get_object_or_404(Dulce, id=id)
+        dulce.delete()
+        return redirect('ver_dulces')
+    
     return redirect('ver_dulces')
 ```
 # 🧾 15. Crear carpeta templates
@@ -234,49 +255,119 @@ templates/
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Dulcería</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Administración Dulcería</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .sidebar {
+            background-color: #2c3e50;
+            min-height: 100vh;
+        }
+        .sidebar .nav-link {
+            color: #ecf0f1;
+        }
+        .sidebar .nav-link:hover {
+            color: #3498db;
+        }
+        .main-content {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin: 20px 0;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+        .table-hover tbody tr:hover {
+            background-color: rgba(102, 126, 234, 0.1);
+        }
+    </style>
 </head>
-<body class="bg-light">
-    {% include 'navbar.html' %}
-    <div class="container mt-4">
-        {% block contenido %}{% endblock %}
+<body>
+    {% include 'app_Dulceria/header.html' %}
+    {% include 'app_Dulceria/navbar.html' %}
+    
+    <div class="container-fluid">
+        <div class="row">
+            <main class="col-md-12">
+                <div class="main-content">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </main>
+        </div>
     </div>
-    {% include 'footer.html' %}
+    
+    {% include 'app_Dulceria/footer.html' %}
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 ```
 # 🧭 18. navbar.html
 ```plaintext
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">🍭 Sistema de Administración Dulcería</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="{% url 'inicio_dulceria' %}">🏠 Inicio</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">🍬 Dulces</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'agregar_dulce' %}">Agregar Dulce</a></li>
-            <li><a class="dropdown-item" href="{% url 'ver_dulces' %}">Ver Dulces</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#">👤 Clientes</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Agregar Cliente</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#">📦 Pedidos</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Agregar Pedido</a></li>
-          </ul>
-        </li>
-      </ul>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inicio_dulceria' %}">
+                        <i class="bi bi-house"></i> Inicio
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-candy"></i> Dulces
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'agregar_dulce' %}">Agregar Dulce</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_dulces' %}">Ver Dulces</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Actualizar Dulce</a></li>
+                        <li><a class="dropdown-item" href="#">Borrar Dulce</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-people"></i> Clientes
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Agregar Clientes</a></li>
+                        <li><a class="dropdown-item" href="#">Ver Clientes</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Actualizar Clientes</a></li>
+                        <li><a class="dropdown-item" href="#">Borrar Clientes</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-cart"></i> Pedidos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Agregar Pedidos</a></li>
+                        <li><a class="dropdown-item" href="#">Ver Pedidos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Actualizar Pedidos</a></li>
+                        <li><a class="dropdown-item" href="#">Borrar Pedidos</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
 ```
 # 🦶 19. footer.html
@@ -288,12 +379,57 @@ templates/
 ```
 # 🏠 20. inicio.html
 ```plaintext
-{% extends 'base.html' %}
-{% block contenido %}
+{% extends 'app_Dulceria/base.html' %}
+
+{% block content %}
 <div class="text-center">
-    <h1>Bienvenido al Sistema de Administración de Dulcería</h1>
-    <p>Gestione sus productos, clientes y pedidos de forma sencilla.</p>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Cinepolis_logo.svg" width="300">
+    <h1 class="display-4 text-primary mb-4">Bienvenido al Sistema de Administración Dulcería</h1>
+    <p class="lead mb-5">Sistema diseñado para la gestión eficiente de productos, clientes y pedidos de dulcería.</p>
+    
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <img src="https://cdn.pixabay.com/photo/2017/08/06/22/16/candy-2599045_1280.jpg" 
+                 alt="Dulcería" 
+                 class="img-fluid rounded shadow-lg mb-4"
+                 style="max-height: 400px; object-fit: cover;">
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="bi bi-candy fs-1"></i>
+                    </h5>
+                    <h6 class="card-subtitle mb-2">Gestión de Dulces</h6>
+                    <p class="card-text">Administra el inventario de productos dulces.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="bi bi-people fs-1"></i>
+                    </h5>
+                    <h6 class="card-subtitle mb-2">Gestión de Clientes</h6>
+                    <p class="card-text">Administra la información de los clientes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="bi bi-cart fs-1"></i>
+                    </h5>
+                    <h6 class="card-subtitle mb-2">Gestión de Pedidos</h6>
+                    <p class="card-text">Controla los pedidos y entregas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 ```
@@ -351,9 +487,226 @@ INSTALLED_APPS = [
     'app_Dulceria',
 ]
 ```
-# 🧭 26. Configurar urls.py de backend_Dulceria
+# 🧭 26. Configurar urls.py de app_dulce
 
 Archivo: backend_Dulceria/urls.py
+```plaintext
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.inicio_dulceria, name='inicio_dulceria'),
+    
+    # URLs para Dulces
+    path('dulces/agregar/', views.agregar_dulce, name='agregar_dulce'),
+    path('dulces/ver/', views.ver_dulces, name='ver_dulces'),
+    path('dulces/actualizar/<int:id>/', views.actualizar_dulce, name='actualizar_dulce'),
+    path('dulces/realizar_actualizacion/<int:id>/', views.realizar_actualizacion_dulce, name='realizar_actualizacion_dulce'),
+    path('dulces/borrar/<int:id>/', views.borrar_dulce, name='borrar_dulce'),
+    path('dulces/realizar_borrado/<int:id>/', views.realizar_borrado_dulce, name='realizar_borrado_dulce'),
+]
+```
+# 🛠️ 27. Registrar modelos en admin.py
+```plaintext
+from django.contrib import admin
+from .models import Dulce, Cliente, Pedido
+
+@admin.register(Dulce)
+class DulceAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'precio', 'stock', 'categoria', 'fecha_disponibilidad')
+    list_filter = ('categoria',)
+    search_fields = ('nombre', 'descripcion')
+```
+# 28. agregar_dulce.html
+```plaintext
+{% extends 'app_Dulceria/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-primary mb-4">Agregar Nuevo Dulce</h2>
+    
+    <form method="POST" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label">Nombre del Dulce</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="precio" class="form-label">Precio</label>
+                <input type="number" step="0.01" class="form-control" id="precio" name="precio" required>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="stock" class="form-label">Stock</label>
+                <input type="number" class="form-control" id="stock" name="stock" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="categoria" class="form-label">Categoría</label>
+                <input type="text" class="form-control" id="categoria" name="categoria" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="fecha_disponibilidad" class="form-label">Fecha de Disponibilidad</label>
+                <input type="date" class="form-control" id="fecha_disponibilidad" name="fecha_disponibilidad" required>
+            </div>
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'ver_dulces' %}" class="btn btn-secondary me-md-2">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar Dulce</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+```
+# 29. ver_dulce.html
+```plaintext
+{% extends 'app_Dulceria/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Lista de Dulces</h2>
+        <a href="{% url 'agregar_dulce' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Agregar Nuevo Dulce
+        </a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Categoría</th>
+                    <th>Fecha Disponibilidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dulce in dulces %}
+                <tr>
+                    <td>{{ dulce.nombre }}</td>
+                    <td>{{ dulce.descripcion|default:"-" }}</td>
+                    <td>${{ dulce.precio }}</td>
+                    <td>{{ dulce.stock }}</td>
+                    <td>{{ dulce.categoria }}</td>
+                    <td>{{ dulce.fecha_disponibilidad }}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a href="#" class="btn btn-sm btn-info">Ver</a>
+                            <a href="{% url 'actualizar_dulce' dulce.id %}" class="btn btn-sm btn-warning">Editar</a>
+                            <a href="{% url 'borrar_dulce' dulce.id %}" class="btn btn-sm btn-danger">Borrar</a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No hay dulces registrados</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+```
+# 30. actualizar_dulce.html
+```plaintext
+{% extends 'app_Dulceria/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-primary mb-4">Actualizar Dulce</h2>
+    
+    <form method="POST" action="{% url 'realizar_actualizacion_dulce' dulce.id %}" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="nombre" class="form-label">Nombre del Dulce</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" value="{{ dulce.nombre }}" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="precio" class="form-label">Precio</label>
+                <input type="number" step="0.01" class="form-control" id="precio" name="precio" value="{{ dulce.precio }}" required>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ dulce.descripcion }}</textarea>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="stock" class="form-label">Stock</label>
+                <input type="number" class="form-control" id="stock" name="stock" value="{{ dulce.stock }}" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="categoria" class="form-label">Categoría</label>
+                <input type="text" class="form-control" id="categoria" name="categoria" value="{{ dulce.categoria }}" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="fecha_disponibilidad" class="form-label">Fecha de Disponibilidad</label>
+                <input type="date" class="form-control" id="fecha_disponibilidad" name="fecha_disponibilidad" value="{{ dulce.fecha_disponibilidad|date:'Y-m-d' }}" required>
+            </div>
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'ver_dulces' %}" class="btn btn-secondary me-md-2">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Actualizar Dulce</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+```
+# 31. borrar_dulce.html
+```plaintext
+{% extends 'app_Dulceria/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">Confirmar Eliminación</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">¿Estás seguro de que deseas eliminar este dulce?</h5>
+                    <p class="card-text">
+                        <strong>Nombre:</strong> {{ dulce.nombre }}<br>
+                        <strong>Precio:</strong> ${{ dulce.precio }}<br>
+                        <strong>Categoría:</strong> {{ dulce.categoria }}
+                    </p>
+                    <p class="text-danger">
+                        <strong>¡Esta acción no se puede deshacer!</strong>
+                    </p>
+                    
+                    <form method="POST" action="{% url 'realizar_borrado_dulce' dulce.id %}">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'ver_dulces' %}" class="btn btn-secondary me-md-2">Cancelar</a>
+                            <button type="submit" class="btn btn-danger">Eliminar Dulce</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+```
+# 32. urls.py (backend_Dulceria)
 ```plaintext
 from django.contrib import admin
 from django.urls import path, include
@@ -363,46 +716,47 @@ urlpatterns = [
     path('', include('app_Dulceria.urls')),
 ]
 ```
-# 🛠️ 27. Registrar modelos en admin.py
-```plaintext
-from django.contrib import admin
-from .models import Dulce, Cliente, Pedido
-
-admin.site.register(Dulce)
-admin.site.register(Cliente)
-admin.site.register(Pedido)
-```
-
 Volver a migrar:
 
 python manage.py makemigrations
 python manage.py migrate
 
-# 🌈 28. Estilo general
+# 🌈 33. Estilo general
 
 Usar colores suaves, modernos y Bootstrap 5 (ya incluido).
 
-# 🧩 29. Estructura completa
+# 🧩 34. Estructura completa
 
 ```plaintext
 UIII_Dulceria_0726/
  ├── .venv/
  ├── backend_Dulceria/
+ │   │   ├── __init__.py
+ │   │   ├── settings.py
+ │   │   ├── urls.py
+ │   │   └── wsgi.py
  ├── app_Dulceria/
  │   ├── templates/
- │   │   ├── dulce/
  │   │   ├── base.html
  │   │   ├── navbar.html
  │   │   ├── footer.html
- │   │   └── inicio.html
+ │   │   ├── inicio.html
+ │   │   └── dulce/
+ |   |       ├── agregar_dulce.html 
+ │   |       ├── ver_dulces.html 
+ │   |       ├── actualizar_dulce.html 
+ │   |       └── borrar_dulce.html 
  │   ├── models.py
  │   ├── views.py
  │   ├── urls.py
- │   └── admin.py
+ │   ├── tests.py
+ │   ├── admin.py
+ │   └── __init__.py
  ├── manage.py
+ └── .venv/
 ```
-# ✅ 30. Proyecto totalmente funcional
-# 🚀 31. Ejecutar servidor
+# ✅ 35. Proyecto totalmente funcional
+# 🚀 36. Ejecutar servidor
 # python manage.py runserver 0726
 
 
