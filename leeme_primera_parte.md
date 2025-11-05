@@ -23,63 +23,69 @@ UIII_Dulceria_0726/
  ├── manage.py
 
 ```
-#🧁 Proyecto Django: Dulcería
+# ==========================================
+# 🧁 Proyecto Django: Dulcería
+# ==========================================
+
 
 Lenguaje: Python
 Framework: Django
 Editor: Visual Studio Code
 Puerto: 0726
 
-#📁 1. Crear carpeta del proyecto
+# 📁 1. Crear carpeta del proyecto
 mkdir UIII_Dulceria_0726
 cd UIII_Dulceria_0726
 
-#💻 2. Abrir VS Code sobre la carpeta
-code .
+# 💻 2. Abrir VS Code sobre la carpeta code .
 
-#🧭 3. Abrir terminal en VS Code
+# 🧭 3. Abrir terminal en VS Code
 
 Desde la barra superior:
 
 Ver → Terminal
 
-#🧩 4. Crear entorno virtual “.venv”
+# 🧩 4. Crear entorno virtual “.venv”
 python -m venv .venv
 
-#⚙️ 5. Activar el entorno virtual
+# ⚙️ 5. Activar el entorno virtual
 En Windows:
 .venv\Scripts\activate
 
 En macOS/Linux:
 source .venv/bin/activate
 
-#🐍 6. Activar intérprete de Python
+# 🐍 6. Activar intérprete de Python
 
 En VS Code:
 Presiona Ctrl + Shift + P → Escribe “Python: Select Interpreter” → Selecciona el que diga .venv.
 
-#📦 7. Instalar Django
+# 📦 7. Instalar Django
 pip install django
 
-#🚀 8. Crear proyecto backend_Dulceria sin duplicar carpeta
+# 🚀 8. Crear proyecto backend_Dulceria sin duplicar carpeta
 django-admin startproject backend_Dulceria .
 
 
 (El punto evita que se cree una carpeta duplicada).
 
-#🌐 9. Ejecutar servidor en el puerto 0726
+# 🌐 9. Ejecutar servidor en el puerto 0726
 python manage.py runserver 0726
 
-#🔗 10. Copiar y pegar el link en el navegador
+# 🔗 10. Copiar y pegar el link en el navegador
 
 Abre en tu navegador:
 
 http://127.0.0.1:0726/
 
-#🧱 11. Crear aplicación app_Dulceria
+# 🧱 11. Crear aplicación app_Dulceria
+
 python manage.py startapp app_Dulceria
 
-#🧬 12. Código del archivo models.py (app_Dulceria/models.py)
+# ==========================================
+# 🧬 12. Código del archivo models.py (app_Dulceria/models.py)
+# ==========================================
+
 from django.db import models
 
 # ==========================================
@@ -149,12 +155,12 @@ class Pedido(models.Model):
     def __str__(self):
         return f"Pedido #{self.pk} de {self.cliente_id.nombre} - Estado: {self.estado}"
 ```
-#⚙️ 12.5 Realizar migraciones
+# ⚙️ 12.5 Realizar migraciones
 python manage.py makemigrations
 python manage.py migrate
 
-#🍬 13. Trabajaremos primero con el modelo Dulce
-#👁️‍🗨️ 14. Código de views.py (CRUD de Dulces)
+# 🍬 13. Trabajaremos primero con el modelo Dulce
+# 👁️‍🗨️ 14. Código de views.py (CRUD de Dulces)
 ```plaintext
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Dulce
@@ -205,12 +211,12 @@ def borrar_dulce(request, id):
     dulce.delete()
     return redirect('ver_dulces')
 ```
-#🧾 15. Crear carpeta templates
+# 🧾 15. Crear carpeta templates
 ```plaintext
 app_Dulceria/
  └── templates/
 ```
-#🧱 16. Archivos dentro de templates
+# 🧱 16. Archivos dentro de templates
 ```plaintext
 templates/
  ├── base.html
@@ -219,7 +225,7 @@ templates/
  ├── footer.html
  └── inicio.html
 ```
-#🎨 17. base.html (Bootstrap)
+# 🎨 17. base.html (Bootstrap)
 ```plaintext
 <!DOCTYPE html>
 <html lang="es">
@@ -238,7 +244,7 @@ templates/
 </body>
 </html>
 ```
-#🧭 18. navbar.html
+# 🧭 18. navbar.html
 ```plaintext
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
@@ -270,14 +276,14 @@ templates/
   </div>
 </nav>
 ```
-#🦶 19. footer.html
+# 🦶 19. footer.html
 ```plaintext
 <footer class="bg-dark text-white text-center py-3 fixed-bottom">
     © <span id="year"></span> | Creado por Dominique Vaquera, CBTIS 128
     <script>document.getElementById("year").innerHTML = new Date().getFullYear();</script>
 </footer>
 ```
-#🏠 20. inicio.html
+# 🏠 20. inicio.html
 ```plaintext
 {% extends 'base.html' %}
 {% block contenido %}
@@ -288,10 +294,10 @@ templates/
 </div>
 {% endblock %}
 ```
-#📂 21. Subcarpeta dulce
+# 📂 21. Subcarpeta dulce
 app_Dulceria/templates/dulce/
 
-#📄 22. Archivos HTML CRUD Dulce
+# 📄 22. Archivos HTML CRUD Dulce
 
 Ejemplo: ver_dulces.html
 ```plaintext
@@ -321,7 +327,7 @@ Ejemplo: ver_dulces.html
 
 (Los demás archivos —agregar, actualizar, borrar— siguen formato simple con formularios HTML sin forms.py).
 
-#🌐 24. Crear urls.py en app_Dulceria
+# 🌐 24. Crear urls.py en app_Dulceria
 ```plaintext
 from django.urls import path
 from . import views
@@ -335,14 +341,14 @@ urlpatterns = [
     path('borrar_dulce/<int:id>/', views.borrar_dulce, name='borrar_dulce'),
 ]
 ```
-#⚙️ 25. Agregar app_Dulceria en settings.py
+# ⚙️ 25. Agregar app_Dulceria en settings.py
 ```plaintext
 INSTALLED_APPS = [
     ...
     'app_Dulceria',
 ]
 ```
-#🧭 26. Configurar urls.py de backend_Dulceria
+# 🧭 26. Configurar urls.py de backend_Dulceria
 
 Archivo: backend_Dulceria/urls.py
 ```plaintext
@@ -354,7 +360,7 @@ urlpatterns = [
     path('', include('app_Dulceria.urls')),
 ]
 ```
-#🛠️ 27. Registrar modelos en admin.py
+# 🛠️ 27. Registrar modelos en admin.py
 ```plaintext
 from django.contrib import admin
 from .models import Dulce, Cliente, Pedido
@@ -369,11 +375,12 @@ Volver a migrar:
 python manage.py makemigrations
 python manage.py migrate
 
-#🌈 28. Estilo general
+# 🌈 28. Estilo general
 
 Usar colores suaves, modernos y Bootstrap 5 (ya incluido).
 
-#🧩 29. Estructura completa
+# 🧩 29. Estructura completa
+
 ```plaintext
 UIII_Dulceria_0726/
  ├── .venv/
@@ -391,9 +398,9 @@ UIII_Dulceria_0726/
  │   └── admin.py
  ├── manage.py
 ```
-#✅ 30. Proyecto totalmente funcional
-#🚀 31. Ejecutar servidor
-python manage.py runserver 0726
+# ✅ 30. Proyecto totalmente funcional
+# 🚀 31. Ejecutar servidor
+# python manage.py runserver 0726
 
 
 Abre en navegador:
