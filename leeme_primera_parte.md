@@ -15,7 +15,11 @@ UIII_Dulceria_0726/
  │   │   ├── base.html
  │   │   ├── navbar.html
  │   │   ├── footer.html
- │   │   └── inicio.html
+ │   │   ├── inicio.html
+ |   |   ├── agregar_dulce.html 
+ │   |   ├── ver_dulces.html 
+ │   |   ├── actualizar_dulce.html 
+ │   |   └── borrar_dulce.html 
  │   ├── models.py
  │   ├── views.py
  │   ├── urls.py
