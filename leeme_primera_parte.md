@@ -11,7 +11,6 @@ UIII_Dulceria_0726/
  ├── backend_Dulceria/
  ├── app_Dulceria/
  │   ├── templates/
- │   │   ├── dulce/
  │   │   ├── base.html
  │   │   ├── navbar.html
  │   │   ├── footer.html
